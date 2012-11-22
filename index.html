@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="http://jsonlint.org/c/css/blueprint/compressed/screen.css"/>
+    <link rel="stylesheet" href="http://jsonlint.org/c/css/blueprint/plugins/css-classes/css-classes.css"/>
+    <link rel="stylesheet" href="http://jsonlint.org/c/css/screen.css"/>
+    <style>
+        html{
+            overflow-x: hidden;
+        }
+        .resultText{
+            width: 100%;
+            height: 5em;
+        }
+        .selectFile{
+            margin: 20px 0;
+            overflow: hidden;
+            height: 220px;
+            width: 100%;
+            border: 5px solid #ccc;
+            cursor: pointer;
+        }
+        .selectFile:hover,.selectFileHover{
+            border-color:#ff0036;
+        }
+
+        .selectFile input{
+            height: 220px;
+            font-size: 100px;
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .selectFileMask{
+            text-align: center;
+            line-height: 220px;
+        }
+        .result{
+            position: relative;
+        }
+        .result h3{
+            margin-bottom: 20px;
+        }
+        .resultImg{
+            border: 1px dashed #CCCCCC;
+            display: block;
+            max-height: 30px;
+            max-width: 30px;
+            padding: 5px;
+            position: absolute;
+            right: 0;
+            top:0;
+        }
+
+        .logo{
+            opacity: 0.3;
+        }
+        .logo:hover{
+            opacity: 1;
+        }
+
+        footer{
+            margin-top:3em;
+            padding: 1em;
+            text-align: center;
+            border-top: 1px solid #DDDDDD;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="banner clear">
+        <div class="left">
+            <h1 id="headerText">
+                Img2Base64
+            </h1>
+            <h3>
+                image to base64
+            </h3>
+        </div>
+        <div class="right span-12 unimportant" style="text-align: right;">
+            <div>
+                <a  class="logo" href="http://www.w3.org/html/logo/">
+                    <img src="http://www.w3.org/html/logo/badge/html5-badge-h-solo.png" width="33" height="34" alt="HTML5 Powered" title="HTML5 Powered">
+                </a>
+            </div>
+            <div>
+
+                <a href="http://www.github.com/umbrae/jsonlintdotcom" id="sourceLink" onclick="javascript: pageTracker._trackPageview('/sourceLink');" name="sourceLink">Source is on GitHub.</a><br>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="selectFile"  ondragenter="console.log(this);this.className+=' selectFileHover';" ondrop="this.className= this.className.split(' ')[0]">
+
+        <input type="file" id="file"/>
+        <h3  class="selectFileMask">select file or drag file to me</h3>
+    </div>
+    <div class="result">
+    <h3>
+        Results               <img class="resultImg" id="resultImg" />
+
+    </h3>
+
+    <textarea autocomplete="off" class="resultText" id="result"></textarea>
+    <p>Size: <span id="length">0</span> B
+        <a class="bold right" id="faqButton" href="#">FAQ</a>
+    </p>
+    </div>
+
+    <div id="faq" style="display: none;">
+        <h3>FAQ</h3>
+        <hr>
+        <div id="faqAccordion">
+        <h5>Where would this be useful?</h5>
+
+            <p>This could be useful when building webpage where you want to include multiple images with having to link to an external document. <br>
+                For example:<br>
+                The Read me documents that are included with my utilities use this Data:_URL scheam so i do not have to include external images for my buttons. The file size of the read me files goes up but the document no longer relies on external documents. <br>
+                <br>
+                The advantages are<br>
+            </p>
+            <ul>
+                <li>HTTP request and header traffic is not required for embedded data, so data: URIs use fewer network resources whenever the overhead of encoding the inline content as a data: URI is smaller than the HTTP overhead.</li>
+                <li>Web browsers are typically configured to use a maximum of four concurrent connections to a server, so inline data frees up a download connection for other content.</li>
+                <li>Browsers manage fewer cache entries for a file that contains data: URIs.</li>
+                <li>Environments with limited or restricted access to external resources may embed content when it is disallowed or impractical to reference externally. For example, an advanced HTML editing field could accept a pasted or inserted image and convert it to a data: URI to hide the complexity of external resources from the user.</li>
+            </ul>
+            <p>The Disadvantages are</p>
+            <ul>
+                <li>Embedded content must be extracted and decoded before changes may be made, then re-encoded and re-embedded afterwards.</li>
+                <li>Base64-encoded data: URIs are roughly 33% larger in size than their binary equivalent.</li>
+                <li>URL-encoded data: URIs can be up to 200% larger (in extreme cases) than the original text content.</li>
+                <li>Information that is embedded more than once is redownloaded as part of the containing file, and thus does not benefit from the browser's cache.</li>
+                <li>Browser limits to URI length provide a maximum data size. For example, URIs in Opera used to have limit of 4kB.</li>
+                <li>Data is included as a simple stream, and many processing environments (such as web browsers) may not support using containers (such as multipart/alternative or message/rfc822) to provide greater complexity such as metadata, data compression, or content negotiation.</li>
+                <li>Browser support: <strong>Microsoft's Internet Explorer, as of version 7, does not support data: URIs.</strong></li>
+            </ul>
+        <h5>What is Data:_URL</h5>
+
+        <p>The data: URI scheme defined in IETF standard RFC 2397, is an URI scheme that allows inclusion of small data items inline, as if they were being referenced to as an external resource. They tend to be far simpler than alternative inclusion methods, such as MIME with cid: or mid:. According to the wording in the RFC, data: URIs are in fact URLs, although they do not actually locate anything.<br><br>
+                <a href="http://en.wikipedia.org/wiki/Data:_URL">Data:_URL</a> [Wikipedia.org]<br>
+                <a href="http://www.ietf.org/rfc/rfc2397">rfc2397</a> [ietf.org] </p>
+        <h5>What is Base64</h5>
+
+            <p>Base 64 is a Positional notation using a base of 64. It is the largest power-of-two base that can be represented using only printable ASCII characters. This has led to its use as a transfer encoding for e-mail among other things. All well-known variants that are known by the name Base64 use the characters A–Z, a–z, and 0?9 in that order for the first 62 digits but the symbols chosen for the last two digits vary considerably between different systems. Several other encoding methods such as uuencode and later versions of binhex use a different set of 64 characters to represent 6 binary digits, but these are never called by the name base64.<br><br>
+                <a href="http://en.wikipedia.org/wiki/Base64">Base64</a> [Wikipedia.org] <br>
+                <a href="http://tools.ietf.org/html/rfc3548">rfc3548</a> [ietf.org] </p>
+        </div>
+    </div>
+
+    <footer>
+        A Tool by <a href="http://guirong.me/">Guirong.me</a>.
+    </footer>
+</div>
+
+
+
+   <script>
+       var result = document.getElementById("result"),
+           len = document.getElementById("length"),
+               resultImg = document.getElementById("resultImg");
+
+       function showResult(ret){
+           result.value = ret;
+           len.innerHTML = ret.length;
+           resultImg.src = ret;
+       }
+
+       document.getElementById("file").addEventListener("change",function(event){
+            var reader = new FileReader();
+            reader.onload = function(fEvent){
+
+                showResult(fEvent.target.result);
+            };
+            reader.readAsDataURL(this.files[0]);
+       },false);
+
+       document.getElementById("faqButton").addEventListener("click",function(event){
+            var el = document.getElementById("faq"),
+                style = el.style;
+            style.display = style.display==="none"?"":"none";
+       });
+
+
+   </script>
+</body>
+</html>
